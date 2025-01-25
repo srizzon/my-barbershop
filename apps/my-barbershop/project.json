@@ -22,7 +22,7 @@
             "input": "apps/my-barbershop/public"
           }
         ],
-        "styles": ["apps/my-barbershop/src/styles.scss"],
+        "styles": ["./node_modules/ng-zorro-antd/ng-zorro-antd.min.css", "apps/my-barbershop/src/styles.scss"],
         "scripts": []
       },
       "configurations": {
