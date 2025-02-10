@@ -22,7 +22,22 @@
             "input": "apps/my-barbershop/public"
           }
         ],
-        "styles": ["./node_modules/ng-zorro-antd/ng-zorro-antd.min.css", "apps/my-barbershop/src/styles.scss"],
+        "styles": [
+          "apps/my-barbershop/src/styles.scss",
+          {
+            "input": "apps/my-barbershop/src/styles/default.less",
+            "bundleName": "default",
+            "inject": false
+          },
+          {
+            "input": "apps/my-barbershop/src/styles/dark.less",
+            "bundleName": "dark",
+            "inject": false
+          }
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": ["apps/my-barbershop/src/styles"]
+        },
         "scripts": []
       },
       "configurations": {
@@ -51,6 +66,9 @@
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "port": 4244
+      },
       "configurations": {
         "production": {
           "buildTarget": "my-barbershop:build:production"
