@@ -1,3 +1,19 @@
-<nz-flex nzGap="small">
-  <button nz-button nzType="primary" (click)="toggleTheme()">Toggle theme</button>
-</nz-flex>
+<form nz-form nzLayout="vertical" [formGroup]="loginForm">
+  <nz-form-item>
+    <nz-form-label nzFor="email">E-mail</nz-form-label>
+    <nz-form-control>
+      <input nz-input type="email" formControlName="email" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzFor="password">Senha</nz-form-label>
+    <nz-form-control>
+      <input nz-input type="password" formControlName="password" />
+    </nz-form-control>
+
+    <a routerLink="/auth/forgot-password">Esqueceu sua senha?</a>
+  </nz-form-item>
+</form>
+
+<button nz-button nzType="primary" nzBlock (click)="login()">Login</button>

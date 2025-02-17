@@ -7,6 +7,7 @@ import { ApplicationConfig, importProvidersFrom, inject, provideAppInitializer, 
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
+import { AuthService } from '@domain/auth/services/auth.service';
 import { ThemeService } from '@shared/services/theme/theme.service';
 
 import { appRoutes } from './app.routes';
@@ -22,5 +23,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideHttpClient(),
     provideAppInitializer(() => inject(ThemeService).loadTheme()),
+    provideAppInitializer(() => inject(AuthService).load()),
   ],
 };
