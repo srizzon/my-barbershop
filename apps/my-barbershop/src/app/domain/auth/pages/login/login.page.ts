@@ -3,18 +3,11 @@ import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { from, map, Observable } from 'rxjs';
 
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { injectSupabase } from '@shared/functions/inject-supabase.function';
-
-interface Article {
-  id: number;
-  title: string;
-  content: string;
-}
 
 @Component({
   selector: 'mb-login',
@@ -50,10 +43,5 @@ export class LoginPage {
     }
 
     this.router.navigate(['/']);
-  }
-
-  getArticles(): Observable<Article[] | null> {
-    const promise = this.supabase.from('articles').select('*').returns<Article[]>();
-    return from(promise).pipe(map(response => response.data));
   }
 }
