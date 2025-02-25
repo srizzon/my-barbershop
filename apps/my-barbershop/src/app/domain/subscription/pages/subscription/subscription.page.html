@@ -1,0 +1,10 @@
+<nz-card>
+  <nz-steps [nzCurrent]="0">
+    <nz-step></nz-step>
+    <nz-step></nz-step>
+  </nz-steps>
+
+  <form [formGroup]="subscriptionService.form" mbFormStorage="subscription-form">
+    <router-outlet />
+  </form>
+</nz-card>

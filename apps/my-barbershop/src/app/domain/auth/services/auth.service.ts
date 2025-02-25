@@ -17,7 +17,6 @@ export class AuthService {
   async load() {
     const { data } = await this.supabase.auth.getSession();
     if (!data.session) {
-      await this.purgeAndRedirect();
       return;
     }
 
