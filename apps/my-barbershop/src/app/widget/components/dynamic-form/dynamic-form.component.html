@@ -1,0 +1,180 @@
+<form nz-form nzLayout="vertical" [formGroup]="form" *ngIf="form">
+  <div nz-row [nzGutter]="16">
+    <ng-container *ngFor="let field of config">
+      <div
+        nz-col
+        [nzLg]="field.size ?? autoSizeColumns"
+        [nzXs]="field.mobileSize ?? 24"
+        [hidden]="field.hidden || (form.controls[field.name] && form.controls[field.name].disabled && field.hideIfDisabled)"
+      >
+        <nz-divider *ngIf="field.type.field === eDynamicField.DIVIDER" [nzText]="field.label" nzOrientation="left"></nz-divider>
+
+        <nz-form-item *ngIf="field.type.field !== eDynamicField.DIVIDER">
+          <nz-form-label
+            *ngIf="
+                  field.label &&
+                  field.type.field !== eDynamicField.CHECKBOX &&
+                  field.type.field !== eDynamicField.SWITCH &&
+                  field.type.field !== eDynamicField.AVATAR &&
+                  field.type.field !== eDynamicField.IMAGE
+                "
+            [nzTooltipTitle]="field.help || ((form.controls[field.name] | formIsRequired | async) && !hideOptionalLabel ? 'Opcional' : '')"
+            [nzTooltipIcon]="field.help ? 'info-circle' : 'question-circle'"
+            >{{ field.label }}
+          </nz-form-label>
+          <nz-form-control [nzExtra]="field.hint" [nzErrorTip]="controlErrorTpl">
+            <ng-container *ngIf="!field.type || field.type.field === eDynamicField.INPUT">
+              <nz-input-group
+                [nzSearch]="field.addOnAfterIcon"
+                [nzSuffix]="field.type.typeField === 'password' ? passwordSuffixTemplate : undefined"
+                [nzAddOnAfter]="field.addOnAfterIcon ? inputSuffixTemplate : field.addOnAfter || undefined"
+              >
+                <ng-template #passwordSuffixTemplate>
+                  <i
+                    nz-icon
+                    [nzType]="field.showPasswordIcon ? 'eye-invisible' : 'eye'"
+                    (click)="togglePasswordIconVisibility(field)"
+                    (keypress.space)="togglePasswordIconVisibility(field)"
+                    tabindex="0"
+                  ></i>
+                </ng-template>
+                <ng-template #inputSuffixTemplate>
+                  @if (field.addOnAfterIcon) {
+                  <button type="button" nz-button nzSearch (click)="field.onAddOnAfterClick && field.onAddOnAfterClick(form)">
+                    <i mb-icon [mbType]="field.addOnAfterIcon" nz-typography nzType="secondary"></i>
+                  </button>
+                  }
+                </ng-template>
+
+                <input
+                  nz-input
+                  [formControlName]="field.name"
+                  [attr.type]="field.showPasswordIcon ? 'text' : field.type.typeField"
+                  [attr.inputmode]="field.type.inputMode"
+                  [attr.placeholder]="field.placeholder"
+                  [mask]="field.mask"
+                  [suffix]="field.maskSuffix || ''"
+                  [leadZeroDateTime]="true"
+                  [dropSpecialCharacters]="!field.keepSpecialCharacters"
+                  (ngModelChange)="field.onChange && field.onChange($event, form)"
+                  [mbAutoFocus]="field.autofocus"
+                />
+              </nz-input-group>
+
+              <a *ngIf="field.showForgotPassword && field.type.typeField === 'password'" [routerLink]="field.forgotPasswordLink"> Esqueceu sua senha? </a>
+            </ng-container>
+
+            <ng-container *ngIf="field.type.field === eDynamicField.INPUT_NUMBER">
+              <nz-input-number [formControlName]="field.name" (ngModelChange)="field.onChange && field.onChange($event, form)"></nz-input-number>
+            </ng-container>
+
+            <ng-container *ngIf="field.type.field === eDynamicField.SELECT">
+              <nz-select
+                [formControlName]="field.name"
+                [nzAllowClear]="!field.select?.hideClear"
+                [nzShowSearch]="field.select?.showSearch"
+                [nzShowArrow]="true"
+                [nzMode]="field.select?.mode || 'default'"
+                (ngModelChange)="field.onChange && field.onChange($event, form)"
+                (nzOpenChange)="field.onOpenChange && field.onOpenChange($event, form)"
+                [nzPlaceHolder]="field.placeholder!"
+                [nzTokenSeparators]="field.select?.mode === 'tags' ? [','] : []"
+                [nzMaxTagCount]="field.select?.maxTagCount || 10"
+                [nzDropdownMatchSelectWidth]="field.select?.dropdownMatchSelectWidth === undefined ? true : !!field.select?.dropdownMatchSelectWidth"
+              >
+                <nz-option *ngFor="let option of field.select?.options" [nzValue]="option.value" [nzLabel]="option.label" [nzDisabled]="option.disabled" nzCustomContent>
+                  @if (option.icon) {
+                  <i mb-icon [mbType]="option.icon"></i>
+                  } {{ option.label }}
+                </nz-option>
+
+                <nz-option *ngFor="let option of field.select?.options$ | async" [nzValue]="option.value" [nzLabel]="option.label"> </nz-option>
+              </nz-select>
+            </ng-container>
+
+            <ng-container *ngIf="field.type.field === eDynamicField.TEXTAREA">
+              <textarea [rows]="field.rows || 4" nz-input [formControlName]="field.name" [attr.type]="field.type.typeField" [attr.placeholder]="field.placeholder"></textarea>
+            </ng-container>
+
+            <ng-container *ngIf="field.type.field === eDynamicField.CHECKBOX">
+              <label nz-checkbox [formControlName]="field.name" (ngModelChange)="field.onChange && field.onChange($event, form)" [for]="field.name">{{ field.label }}</label>
+            </ng-container>
+
+            <ng-container *ngIf="field.type.field === eDynamicField.DATE">
+              <nz-date-picker
+                [formControlName]="field.name"
+                [nzFormat]="field.mask || 'dd/MM/yyyy'"
+                [nzShowNow]="false"
+                nzPlaceHolder=" "
+                [nzDisabledDate]="field.date?.disableDate"
+                (ngModelChange)="field.onChange && field.onChange($event, form)"
+              ></nz-date-picker>
+            </ng-container>
+
+            <ng-container *ngIf="field.type.field === eDynamicField.TIME">
+              <nz-time-picker [formControlName]="field.name" nzFormat="HH:mm" nzPlaceHolder=" "></nz-time-picker>
+            </ng-container>
+
+            <ng-container *ngIf="field.type.field === eDynamicField.DATE_TIME">
+              <nz-date-picker
+                [formControlName]="field.name"
+                [nzShowTime]="{ nzFormat: 'HH:mm' }"
+                nzFormat="dd/MM/yyyy HH:mm"
+                [nzShowNow]="false"
+                nzPlaceHolder=" "
+              ></nz-date-picker>
+            </ng-container>
+
+            <ng-container *ngIf="field.type.field === eDynamicField.SWITCH">
+              <div class="mb-switch">
+                <div>
+                  <span>{{ field.label }}</span>
+                  @if (field.help) {
+                  <br />
+                  <span nz-typography nzType="secondary">{{ field.help }}</span>
+                  }
+                </div>
+                <nz-switch [formControlName]="field.name" (ngModelChange)="field.onChange && field.onChange($event, form)"></nz-switch>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="field.type.field === eDynamicField.AVATAR">
+              <div class="avatar-container">
+                <div class="avatar-uploader">
+                  <nz-avatar [nzSize]="128" nzIcon="user" [nzSrc]="(form.controls[field.name].value | downloadStorage | async)!" (click)="previewImage(field.name)"> </nz-avatar>
+
+                  <nz-upload [nzShowUploadList]="false" [nzBeforeUpload]="beforeUploadAvatar" [nzAccept]="field.fileAccept">
+                    <button type="button" nz-button nzType="primary" nzShape="circle">
+                      <span nz-icon nzType="plus"></span>
+                    </button>
+                  </nz-upload>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="field.type.field === eDynamicField.RADIO">
+              <nz-radio-group [formControlName]="field.name" (ngModelChange)="field.onChange && field.onChange($event, form)">
+                <label nz-radio *ngFor="let option of field.select?.options" [nzValue]="option.value" [for]="option.value">{{ option.label }}</label>
+              </nz-radio-group>
+            </ng-container>
+
+            <ng-container *ngIf="field.type.field === eDynamicField.IMAGE">
+              <div class="image-container">
+                <img [src]="(form.controls[field.name].value | downloadStorage: field.imageBucket | async)! || 'https://placehold.co/1280x720'" alt="Imagem" />
+
+                <nz-upload [nzShowUploadList]="false" [nzBeforeUpload]="beforeUploadImage" [nzAccept]="field.fileAccept">
+                  <button type="button" nz-button nzType="primary" nzShape="circle">
+                    <span nz-icon nzType="plus"></span>
+                  </button>
+                </nz-upload>
+              </div>
+            </ng-container>
+
+            <ng-template #controlErrorTpl let-control> {{ getErrorMessage(control.errors) }} </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </ng-container>
+  </div>
+  <ng-content></ng-content>
+</form>

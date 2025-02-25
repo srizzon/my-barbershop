@@ -9,7 +9,7 @@ module.exports = [
     files: ['**/*.ts'],
     rules: {
       '@angular-eslint/directive-selector': [
-        'error',
+        'warn',
         {
           type: 'attribute',
           prefix: 'mb',

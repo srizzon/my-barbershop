@@ -1,4 +1,5 @@
 import { provideNzI18n, pt_BR } from 'ng-zorro-antd/i18n';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 
 import { registerLocaleData } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
@@ -22,6 +23,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(FormsModule),
     provideAnimationsAsync(),
     provideHttpClient(),
+    provideEnvironmentNgxMask(),
     provideAppInitializer(() => inject(ThemeService).loadTheme()),
     provideAppInitializer(() => inject(AuthService).load()),
   ],

@@ -1,0 +1,71 @@
+@use 'medias' as *;
+
+.mb-switch {
+  background: #fafafa;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.3rem 1rem;
+  gap: 0.5rem;
+}
+
+.avatar-container {
+  display: flex;
+  justify-content: center;
+
+  .avatar-uploader {
+    position: relative;
+    display: inline-block;
+
+    button {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+  }
+}
+
+.ant-radio-wrapper {
+  margin: 0.25rem 0;
+}
+
+.image-container {
+  img {
+    width: 100%;
+    object-fit: cover;
+    position: relative;
+    display: inline-block;
+    border-radius: 0.5rem;
+    height: 265px;
+
+    @include max-tablet {
+      height: 200px;
+    }
+  }
+
+  button {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+  }
+}
+
+::ng-deep {
+  nz-option-container {
+    .ant-select-item-option-content {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      .material-icons-outlined {
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+.material-icons-outlined {
+  font-size: 1rem;
+  display: block;
+}
