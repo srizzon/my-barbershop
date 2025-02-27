@@ -4,9 +4,10 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { debounceTime } from 'rxjs';
 
-import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { eSubscriptionStep } from '@domain/subscription/enums/subscription-step.enum';
 import { SubscriptionService } from '@domain/subscription/services/subscription.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { eDynamicField } from '@widget/components/dynamic-form/dynamic-field.enum';
@@ -20,7 +21,7 @@ import { DynamicFormComponent } from '@widget/components/dynamic-form/dynamic-fo
   templateUrl: './admin-details.component.html',
   styleUrl: './admin-details.component.scss',
 })
-export class AdminDetailsComponent implements AfterViewInit {
+export class AdminDetailsComponent implements AfterViewInit, OnInit {
   private subscriptionService = inject(SubscriptionService);
 
   formConfig: iDynamicFormConfig[] = [
@@ -66,6 +67,10 @@ export class AdminDetailsComponent implements AfterViewInit {
   ];
 
   @ViewChild(DynamicFormComponent) dynamicForm!: DynamicFormComponent;
+
+  ngOnInit(): void {
+    this.subscriptionService.currentStep = eSubscriptionStep.ADMIN;
+  }
 
   ngAfterViewInit(): void {
     this.dynamicForm?.form.valueChanges.pipe(untilDestroyed(this), debounceTime(300)).subscribe(value => {
