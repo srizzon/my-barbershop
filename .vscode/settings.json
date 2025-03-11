@@ -117,4 +117,5 @@
     "supabase",
     "SUPABASE"
   ],
+  "deno.enable": true
 }
