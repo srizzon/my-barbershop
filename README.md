@@ -1,3 +1,9 @@
+<div align="center">
+  
+[![Criando um SaaS do Zero com Angular e Supabase](https://github.com/user-attachments/assets/a90edc6e-5722-4932-b550-c88880904ef6)](https://www.youtube.com/watch?v=WDcdtF4nrnY)
+
+</div>
+
 # 🎥 Criando um SaaS do Zero com Angular e Supabase
 
 Acompanhe o desenvolvimento completo desse projeto na nossa série no YouTube:
