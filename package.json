@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "start": "nx s my-barbershop -o",
     "prepare": "husky"
   },
   "private": true,
