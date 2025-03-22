@@ -28,7 +28,7 @@ export class CompanyDetailsComponent implements OnInit, AfterViewInit {
   @ViewChild(DynamicFormComponent) dynamicForm!: DynamicFormComponent;
 
   ngOnInit(): void {
-    this.subscriptionService.currentStep = eSubscriptionStep.COMPANY;
+    this.subscriptionService.currentStep.set(eSubscriptionStep.COMPANY);
   }
 
   ngAfterViewInit(): void {

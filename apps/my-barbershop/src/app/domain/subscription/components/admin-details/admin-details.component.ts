@@ -69,7 +69,7 @@ export class AdminDetailsComponent implements AfterViewInit, OnInit {
   @ViewChild(DynamicFormComponent) dynamicForm!: DynamicFormComponent;
 
   ngOnInit(): void {
-    this.subscriptionService.currentStep = eSubscriptionStep.ADMIN;
+    this.subscriptionService.currentStep.set(eSubscriptionStep.ADMIN);
   }
 
   ngAfterViewInit(): void {

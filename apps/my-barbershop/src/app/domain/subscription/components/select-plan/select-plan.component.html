@@ -1,0 +1,46 @@
+<h2>Selecione um plano</h2>
+
+<nz-flex nzGap="large" nzVertical>
+  <span class="description" nz-typography nzType="secondary"> Escolha o plano que melhor se encaixa nas necessidades da sua empresa. </span>
+
+  @if (loadingService.loading()) {
+  <nz-spin nzTip="Carregando planos..."></nz-spin>
+  <br />
+  } @else {
+
+  <nz-radio-group [(ngModel)]="selectedPrice" (ngModelChange)="changePlan($event)">
+    <nz-flex nzGap="middle" nzVertical>
+      @for (product of products(); track $index) {
+      <nz-card nzSize="small" (click)="changePlan(product.price?.id)" [nzBordered]="selectedPrice === product.price?.id">
+        <nz-flex nzGap="small" nzAlign="center">
+          <label nz-radio [nzValue]="product.price?.id"></label>
+
+          <nz-flex nzVertical class="w-full">
+            <nz-flex nzGap="small" nzAlign="center" nzJustify="space-between">
+              <b>{{ product.name }}</b>
+              <div>
+                <nz-tag nzColor="processing">
+                  <b>{{ (product.price?.unit_amount || 0) / 100 | currency: 'BRL' }}</b>
+                </nz-tag>
+              </div>
+            </nz-flex>
+            <span nz-typography nzType="secondary">{{ product.description }}</span>
+          </nz-flex>
+        </nz-flex>
+      </nz-card>
+      }
+    </nz-flex>
+  </nz-radio-group>
+
+  <nz-flex nzGap="small" nzJustify="center">
+    <button nz-button nzType="primary" [routerLink]="['/subscription', 'company']">
+      <i nz-icon nzType="arrow-left"></i>
+      Etapa anterior
+    </button>
+    <button nz-button nzType="primary" (click)="submit()">
+      Criar conta
+      <i nz-icon nzType="arrow-right"></i>
+    </button>
+  </nz-flex>
+  }
+</nz-flex>

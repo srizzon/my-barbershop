@@ -22,11 +22,22 @@ export class AuthService {
 
     this.currentUser.set(data.session.user as unknown as iUser);
     this.isLoggedIn.set(true);
-    console.log('User loaded:', this.currentUser());
   }
 
   async purgeAndRedirect() {
     await this.supabase.auth.signOut();
     this.router.navigate(['/auth']);
+  }
+
+  async updateUser(data: Partial<iUser>, id?: string) {
+    const { data: user, error } = await this.supabase
+      .from('users')
+      .update(data)
+      .match({ id: id || this.currentUser()?.id })
+      .select('*')
+      .maybeSingle();
+
+    if (error) throw error;
+    this.currentUser.set(user as iUser);
   }
 }

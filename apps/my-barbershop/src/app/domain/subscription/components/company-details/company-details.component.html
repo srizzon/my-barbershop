@@ -1,6 +1,6 @@
 <h2>Detalhes da empresa</h2>
 
-<span nz-typography nzType="secondary"> Agora precisamos de algumas informações sobre a sua empresa. </span>
+<span class="description" nz-typography nzType="secondary"> Agora precisamos de algumas informações sobre a sua empresa. </span>
 
 <mb-dynamic-form [config]="formConfig" />
 
@@ -9,8 +9,8 @@
     <i nz-icon nzType="arrow-left"></i>
     Etapa anterior
   </button>
-  <button nz-button nzType="primary" (click)="submit()">
-    Criar conta
+  <button nz-button nzType="primary" [routerLink]="['/subscription', 'select-plan']">
+    Próxima etapa
     <i nz-icon nzType="arrow-right"></i>
   </button>
 </nz-flex>
