@@ -28,6 +28,10 @@ export const appRoutes: Route[] = [
         loadChildren: () => import('./domain/dashboard/dashboard.routes').then(m => m.DASHBOARD_ROUTES),
       },
       {
+        path: 'view',
+        loadChildren: () => import('./domain/storefront/storefront.routes').then(m => m.STOREFRONT_ROUTES),
+      },
+      {
         path: '**',
         pathMatch: 'full',
         redirectTo: 'dashboard',

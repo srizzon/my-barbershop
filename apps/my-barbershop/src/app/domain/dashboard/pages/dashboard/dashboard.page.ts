@@ -10,6 +10,7 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { eDynamicField } from '@widget/components/dynamic-form/dynamic-field.enum';
 import { iDynamicFormConfig } from '@widget/components/dynamic-form/dynamic-form-config.interface';
 import { DynamicFormComponent } from '@widget/components/dynamic-form/dynamic-form.component';
@@ -33,6 +34,7 @@ enum eDashboardSegmentedOptions {
     NzSliderModule,
     NzTypographyModule,
     DynamicFormComponent,
+    RouterModule,
   ],
   templateUrl: './dashboard.page.html',
   styleUrl: './dashboard.page.scss',
@@ -43,14 +45,15 @@ export class DashboardPage {
 
   eDashboardSegmentedOptions = eDashboardSegmentedOptions;
 
-  /*
-  Nome da Barbearia
-  QueuePro Barber
-  Endereço
-  Horário de Funcionamento
-  Serviços Oferecidos
-  */
   configForm: iDynamicFormConfig[] = [
+    {
+      label: 'Foto',
+      name: 'photo',
+      type: {
+        field: eDynamicField.AVATAR,
+      },
+      size: 24,
+    },
     {
       label: 'Nome da Barbearia',
       name: 'name',
@@ -71,7 +74,7 @@ export class DashboardPage {
     },
     {
       label: 'Horário de Funcionamento',
-      name: 'workingHours',
+      name: 'working_hours',
       type: {
         field: eDynamicField.INPUT,
       },
@@ -85,7 +88,6 @@ export class DashboardPage {
         field: eDynamicField.TEXTAREA,
       },
       placeholder: 'Serviços Oferecidos',
-      hint: 'Coloque um serviço por linha. Eles serão exibidos como uma lista na página principal.',
       size: 24,
     },
   ];

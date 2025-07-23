@@ -1,11 +1,11 @@
 <nz-flex nzVertical nzGap="middle">
-  <nz-flex nzJustify="space-between" nzAlign="center">
+  <nz-flex nzJustify="space-between" nzAlign="center" nzGap="middle" nzWrap="wrap">
     <div>
       <h1>Painel de Administração</h1>
       <span nz-typography nzType="secondary">Gerencie a página pública da sua barbearia.</span>
     </div>
 
-    <button nz-button>
+    <button nz-button [routerLink]="['/view']">
       <i nz-icon nzType="eye"></i>
       Ver página pública
     </button>
