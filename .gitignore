@@ -43,3 +43,5 @@ Thumbs.db
 
 .angular
 .env
+
+apps/my-barbershop/src/environments/*.ts
