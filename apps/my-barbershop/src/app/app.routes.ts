@@ -19,4 +19,19 @@ export const appRoutes: Route[] = [
       },
     ],
   },
+  {
+    path: '',
+    loadComponent: () => import('./core/layout/shell/shell.layout').then(m => m.ShellLayout),
+    children: [
+      {
+        path: 'dashboard',
+        loadChildren: () => import('./domain/dashboard/dashboard.routes').then(m => m.DASHBOARD_ROUTES),
+      },
+      {
+        path: '**',
+        pathMatch: 'full',
+        redirectTo: 'dashboard',
+      },
+    ],
+  },
 ];
