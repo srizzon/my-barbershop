@@ -1,18 +1,30 @@
 <nz-card class="storefront-page">
   <nz-flex nzVertical nzJustify="center" nzAlign="center">
     <div class="text-center">
-      <h1>QueuePro Barber</h1>
+      <h1>{{ storefrontData()?.name || 'Carregando...' }}</h1>
+      @if (storefrontData()?.is_open) {
       <nz-tag nzColor="success">
         <nz-badge nzStatus="success"></nz-badge>
         Aberto
       </nz-tag>
+      } @else {
+      <nz-tag nzColor="error">
+        <nz-badge nzStatus="error"></nz-badge>
+        Fechado
+      </nz-tag>
+      }
     </div>
 
     <br />
 
     <div class="text-center">
-      <!-- <span nz-typography nzType="secondary">Tempo de Espera Estimado</span> -->
-      <nz-countdown [nzValue]="deadline" nzTitle="Tempo de Espera Estimado"></nz-countdown>
+      @if (hasWaitingTime()) {
+      <nz-countdown [nzValue]="deadline()" nzTitle="Tempo de Espera Estimado"></nz-countdown>
+      } @else if (storefrontData()?.is_open) {
+      <h2>Sem fila no momento</h2>
+      } @else {
+      <h2>Estabelecimento fechado</h2>
+      }
     </div>
 
     <nz-divider />
@@ -20,7 +32,7 @@
     <nz-flex nzVertical nzGap="middle">
       <!-- nossos serviços -->
       <nz-card>
-        <nz-card-meta nzTitle="Nossos Serviços" nzDescription="Corte de Cabelo, Barba, Bigode, Lavagem" [nzAvatar]="cardService">
+        <nz-card-meta nzTitle="Nossos Serviços" [nzDescription]="storefrontData()?.services || 'Carregando...'" [nzAvatar]="cardService">
           <ng-template #cardService>
             <i nz-icon nzType="scissor"></i>
           </ng-template>
@@ -28,7 +40,7 @@
       </nz-card>
 
       <nz-card>
-        <nz-card-meta nzTitle="Endereço" nzDescription="Av. Principal, 123 - Centro" [nzAvatar]="cardIcon">
+        <nz-card-meta nzTitle="Endereço" [nzDescription]="storefrontData()?.address || 'Carregando...'" [nzAvatar]="cardIcon">
           <ng-template #cardIcon>
             <i nz-icon nzType="environment"></i>
           </ng-template>
@@ -36,7 +48,7 @@
       </nz-card>
 
       <nz-card>
-        <nz-card-meta nzTitle="Horário de Funcionamento" nzDescription="Segunda a Sexta: 08:00 - 18:00, Sábado: 08:00 - 14:00" [nzAvatar]="cardClock">
+        <nz-card-meta nzTitle="Horário de Funcionamento" [nzDescription]="storefrontData()?.working_hours || 'Carregando...'" [nzAvatar]="cardClock">
           <ng-template #cardClock>
             <i nz-icon nzType="clock-circle"></i>
           </ng-template>

@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { AuthService } from '@domain/auth/services/auth.service';
+import { CompanyService } from '@shared/services/company/company.service';
 import { ThemeService } from '@shared/services/theme/theme.service';
 
 import { appRoutes } from './app.routes';
@@ -26,5 +27,6 @@ export const appConfig: ApplicationConfig = {
     provideEnvironmentNgxMask(),
     provideAppInitializer(() => inject(ThemeService).loadTheme()),
     provideAppInitializer(() => inject(AuthService).load()),
+    provideAppInitializer(() => inject(CompanyService).load()),
   ],
 };
